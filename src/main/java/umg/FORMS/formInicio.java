@@ -27,18 +27,7 @@ public class formInicio extends JFrame {
     private JTextField txtCursoSearch;
     private JButton btnCursoSearch;
     private JButton btnCursoCrear;
-    private JButton bEstudiantesListar;
-    private JButton bCursosEliminar;
-    private JButton bInscripcionesVer;
-    private JButton bInscripcionesCrear;
-    private JButton bInscripcionesEliminar;
-    private JButton bEstudiantsCrear;
-    private JButton bEstudiantesActualizar;
-    private JButton bEstudiantesEliminar;
-    private JButton bCursosListar;
-    private JButton bCursosCrear;
-    private JButton bCursosActualizar;
-    private JMenu menu = new JMenu();
+
     private DefaultTableModel mdlTableEstudiantes = new TableModel();
     private DefaultTableModel mdlTableCursos = new TableModel();
 
@@ -77,6 +66,7 @@ public class formInicio extends JFrame {
         btnInscribir.addActionListener(new ActionListener() {@Override public void actionPerformed(ActionEvent e) {estudianteCrear();}});
         btnCursoCrear.addActionListener(new ActionListener() {@Override public void actionPerformed(ActionEvent e) {cursoCrear();}});
         txtBuscar.addActionListener(e -> btnBuscar.doClick());
+        txtCursoSearch.addActionListener(e -> btnCursoSearch.doClick());
         //SETEAR INFORMACION
         establecerTablaEstudiantes();
         establecerTablaCursos();

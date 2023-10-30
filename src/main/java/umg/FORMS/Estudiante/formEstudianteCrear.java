@@ -8,11 +8,7 @@ import java.awt.event.*;
 
 public class formEstudianteCrear extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JTextField campocarnet;
-    private JTextField camponombre;
-    private JTextField campoapellido;
+
     private JButton btnProcesar;
     private JButton btnCancelar;
     private JTextField txtCarnet;
