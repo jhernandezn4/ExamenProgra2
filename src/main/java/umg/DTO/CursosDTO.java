@@ -20,7 +20,8 @@ public class CursosDTO {
     @Basic
     @Column(name = "precio", nullable = true, precision = 0)
     private BigInteger precio;
-    @OneToMany(mappedBy = "curso")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "curso", cascade = CascadeType.ALL)
     private Collection<InscripcionesDTO> estudiantes;
     @Basic
     @Column(name = "codigo", nullable = true, length = 255)

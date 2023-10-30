@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import umg.DTO.EstudiantesDTO;
 
 import java.util.List;
 
@@ -32,14 +33,25 @@ public class CursosDAO {
             String q = "FROM CursosDTO ";
             Query<CursosDTO> query = session.createQuery(q, CursosDTO.class);
             List<CursosDTO> cursos = query.list();
-
-
             return cursos;
 
         }catch (Exception e) {
             return null;
         }
+    }
+    public List<CursosDTO> listar(String field){
 
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            String q = "FROM CursosDTO where codigo = :codigo or LOWER(nombre) like LOWER(:field)";
+            Query<CursosDTO> query = session.createQuery(q, CursosDTO.class);
+            query.setParameter("codigo", field).setParameter("field", "%"+field+"%");
+            List<CursosDTO> cursos = query.list();
+            return cursos;
+
+        }catch (Exception e) {
+            return null;
+        }
     }
     public CursosDTO leer(String codigo ){
 

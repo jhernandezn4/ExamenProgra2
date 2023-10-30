@@ -1,5 +1,7 @@
 package umg.DAO;
 
+import umg.DTO.CursosDTO;
+import umg.DTO.EstudiantesDTO;
 import umg.DTO.InscripcionesDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,11 +20,12 @@ public class InscripcionesDAO {
             session.persist(inscripcion);
             session.getTransaction().commit();
         }catch (Exception e) {
+            System.out.println(e.getMessage());
             session.getTransaction().rollback();
         } finally {
             session.close();
         }
-        return this.leer(inscripcion.getEstudiante().getCarnet(),inscripcion.getCurso().getCodigo());
+        return inscripcion;
     }
     public List<InscripcionesDTO> listar(){
 
@@ -40,19 +43,24 @@ public class InscripcionesDAO {
         }
 
     }
-    public InscripcionesDTO leer(String carnet, String codigo ){
+    public InscripcionesDTO leer(int cursos_id, int estudiantes_id ){
 
         try(Session session = sessionFactory.openSession()){
             session.beginTransaction();
-            String q = "FROM InscripcionesDTO WHERE carnet = :carnet and codigo = :codigo";
+
+            String q = "FROM InscripcionesDTO WHERE cursosId = :curso and estudiantesId = :estudiante";
+
             Query<InscripcionesDTO> query = session.createQuery(q, InscripcionesDTO.class);
-            query.setParameter("carnet", carnet).setParameter("codigo",codigo);
+
+            query.setParameter("curso", cursos_id).setParameter("estudiante",estudiantes_id);
+            new Throwable(query.getQueryString());
 
             InscripcionesDTO inscripcion = query.uniqueResult();
 
             return inscripcion;
 
         }catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
 

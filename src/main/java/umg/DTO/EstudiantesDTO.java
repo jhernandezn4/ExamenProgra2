@@ -1,7 +1,9 @@
 package umg.DTO;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -22,8 +24,9 @@ public class EstudiantesDTO {
     @Basic
     @Column(name = "apellido", nullable = false, length = 255)
     private String apellido;
-    @OneToMany(mappedBy = "estudiante")
-    private Collection<InscripcionesDTO> cursos;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "estudiante", cascade = CascadeType.ALL)
+    private Collection<InscripcionesDTO> cursos= new ArrayList<InscripcionesDTO>();;
+
 
     public int getEstudianteId() {
         return estudianteId;

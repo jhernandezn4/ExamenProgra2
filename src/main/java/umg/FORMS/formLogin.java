@@ -1,4 +1,4 @@
-package umg.Vistas;
+package umg.FORMS;
 
 import umg.DAO.UsuariosDAO;
 import umg.DTO.UsuariosDTO;
@@ -7,7 +7,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Login extends JDialog {
+public class formLogin extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -16,7 +16,7 @@ public class Login extends JDialog {
 
     UsuariosDAO usuariosDAO = new UsuariosDAO();
 
-    public Login() {
+    public formLogin() {
         setSize(400, 300);
 
         // Centrar el formulario en la pantalla
@@ -61,9 +61,9 @@ public class Login extends JDialog {
         }
 
         if (BCrypt.checkpw(password, u.getPassword())) {
-            Inicio inicio= new Inicio();
-            inicio.setVisible(true);
-            inicio.requestFocus();
+            formInicio formInicio = new formInicio();
+            formInicio.setVisible(true);
+            formInicio.requestFocus();
 
             setVisible(false);
         }else{
@@ -78,7 +78,7 @@ public class Login extends JDialog {
     }
 
     public static void main(String[] args) {
-        Login dialog = new Login();
+        formLogin dialog = new formLogin();
         dialog.pack();
         dialog.setVisible(true);
 

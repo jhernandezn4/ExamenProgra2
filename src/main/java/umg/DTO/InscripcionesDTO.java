@@ -7,21 +7,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "inscripciones", schema = "public", catalog = "proyecto")
 public class InscripcionesDTO {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inscripciones_secuencia")
+    @SequenceGenerator(name = "inscripciones_secuencia", sequenceName = "inscripciones_seq", allocationSize = 1)
     @Column(name = "inscripciones_id", nullable = false)
     private int inscripcionesId;
     @Basic
-    @Column(name = "cursos_id",insertable=false, updatable=false, nullable = true)
+    @Column(name = "cursos_id", nullable = true)
     private Integer cursosId;
     @Basic
-    @Column(name = "estudiantes_id", insertable=false, updatable=false, nullable = true)
+    @Column(name = "estudiantes_id",  nullable = true)
     private Integer estudiantesId;
     @ManyToOne
-    @JoinColumn(name = "cursos_id",  referencedColumnName = "cursos_id")
+    @JoinColumn(name = "cursos_id", insertable=false, updatable=false, referencedColumnName = "cursos_id")
     private CursosDTO curso;
     @ManyToOne
-    @JoinColumn(name = "estudiantes_id", referencedColumnName = "estudiante_id")
+    @JoinColumn(name = "estudiantes_id", insertable=false, updatable=false, referencedColumnName = "estudiante_id")
     private EstudiantesDTO estudiante;
 
     public int getInscripcionesId() {

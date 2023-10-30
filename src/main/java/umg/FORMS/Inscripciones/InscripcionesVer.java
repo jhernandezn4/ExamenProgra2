@@ -1,7 +1,7 @@
-package umg.Vistas.Estudiante;
+package umg.FORMS.Inscripciones;
 
-import umg.DAO.EstudiantesDAO;
-import umg.DTO.EstudiantesDTO;
+import umg.DAO.InscripcionesDAO;
+import umg.DTO.InscripcionesDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,52 +9,40 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class EstudiantesVer extends JDialog {
+public class InscripcionesVer extends JDialog {
     private JPanel contentPane;
-
+    private JButton buttonOK;
+    private JButton buttonCancel;
     private JTable tabla;
-    private JButton actualizarButton;
     private JButton cerrarButton;
+    private JButton actualizarButton;
 
-    private EstudiantesDAO dao = new EstudiantesDAO();
+    private List<InscripcionesDTO> inscripciones = new ArrayList<InscripcionesDTO>();
+    private InscripcionesDAO dao = new InscripcionesDAO();
 
-    List<EstudiantesDTO> estudiantes = new ArrayList<EstudiantesDTO>();
-
-    public EstudiantesVer() {
+    public InscripcionesVer() {
         setContentPane(contentPane);
         setModal(true);
-
         setSize(600, 500);
         setLocationRelativeTo(null);
 
-
-        // call onCancel() when cross is clicked
-
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
         actualizarButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 listar();
             }
         });
+
         cerrarButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         });
-        tabla.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e)  {
 
-                int row = tabla.getSelectedRow();
-                String carnet = (String)tabla.getModel().getValueAt(row, 0);
-                JOptionPane.showMessageDialog(null, carnet, "Exito", JOptionPane.WARNING_MESSAGE);
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
             }
         });
 
@@ -64,22 +52,26 @@ public class EstudiantesVer extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-
         listar();
-
     }
+
     public void listar(){
         DefaultTableModel modelo = new DefaultTableModel();
 
         modelo.addColumn("Carnet");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Apellido");
+        modelo.addColumn("Estudiante");
+        modelo.addColumn("Codigo Curso");
+        modelo.addColumn("Nombre Curso");
 
-        estudiantes = dao.listar();
+        inscripciones = dao.listar();
         tabla.setModel(modelo);
-        for(EstudiantesDTO estudiante : estudiantes){
-            modelo.addRow(new Object[]{estudiante.getCarnet(), estudiante.getNombre(), estudiante.getApellido()});
+        for(InscripcionesDTO inscripcion : inscripciones){
+            modelo.addRow(new Object[]{
+                    inscripcion.getEstudiante().getCarnet(),
+                    inscripcion.getEstudiante().getNombre()+" "+inscripcion.getEstudiante().getApellido(),
+                    inscripcion.getCurso().getCodigo(),
+                    inscripcion.getCurso().getNombre()
+            });
         }
 
 
@@ -97,7 +89,7 @@ public class EstudiantesVer extends JDialog {
     }
 
     public static void main(String[] args) {
-        EstudiantesVer dialog = new EstudiantesVer();
+        InscripcionesVer dialog = new InscripcionesVer();
 
         dialog.setVisible(true);
         System.exit(0);

@@ -32,14 +32,25 @@ public class EstudiantesDAO {
             String q = "FROM EstudiantesDTO ";
             Query<EstudiantesDTO> query = session.createQuery(q, EstudiantesDTO.class);
             List<EstudiantesDTO> estudiantes = query.list();
-
-
             return estudiantes;
 
         }catch (Exception e) {
             return null;
         }
+    }
+    public List<EstudiantesDTO> listar(String field){
 
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            String q = "FROM EstudiantesDTO where carnet = :carnet or LOWER(nombre) like LOWER(:field) or LOWER(apellido) like LOWER(:field)";
+            Query<EstudiantesDTO> query = session.createQuery(q, EstudiantesDTO.class);
+            query.setParameter("carnet", field).setParameter("field", "%"+field+"%");
+            List<EstudiantesDTO> estudiantes = query.list();
+            return estudiantes;
+
+        }catch (Exception e) {
+            return null;
+        }
     }
     public EstudiantesDTO leer(String carnet ){
 

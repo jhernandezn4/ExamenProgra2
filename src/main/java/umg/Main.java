@@ -2,8 +2,10 @@ package umg;
 
 import umg.DAO.UsuariosDAO;
 import umg.DTO.UsuariosDTO;
-import umg.Vistas.Login;
+import umg.FORMS.formLogin;
 import org.mindrot.jbcrypt.BCrypt;
+
+import javax.swing.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -11,11 +13,14 @@ public class Main {
 
 
     public static void main(String[] args) {
-
-        Login login = new Login();
-        login.pack();
-        //se abre login
-        login.setVisible(true);
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        formLogin formLogin = new formLogin();
+        formLogin.pack();
+        formLogin.setVisible(true);
 
     }
     public static void crearUsuarioInicial(){

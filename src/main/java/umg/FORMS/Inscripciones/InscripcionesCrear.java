@@ -1,4 +1,4 @@
-package umg.Vistas.Inscripciones;
+package umg.FORMS.Inscripciones;
 
 import umg.DAO.CursosDAO;
 import umg.DAO.EstudiantesDAO;
